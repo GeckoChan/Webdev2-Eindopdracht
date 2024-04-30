@@ -3,10 +3,10 @@ import axios from "../axios-auth";
 
 export const useUserStore = defineStore("userstore", {
   state: () => ({
-    username: null,
-    token: null,
-    email: null,
-    role: null,
+    username: localStorage.getItem("username") || null,
+    token: localStorage.getItem("token") || null,
+    email: localStorage.getItem("email") || null,
+    role: localStorage.getItem("role") || null,
   }),
   getters: {
     isLoggedIn: (state) => state.username !== null,
@@ -31,6 +31,12 @@ export const useUserStore = defineStore("userstore", {
             this.email = res.data.email;
             this.role = res.data.role;
             axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.token;
+
+            // Save data to local storage
+            localStorage.setItem("username", this.username);
+            localStorage.setItem("token", this.token);
+            localStorage.setItem("email", this.email);
+            localStorage.setItem("role", this.role);
             resolve();
           })
           .catch((error) => reject(error));
@@ -40,7 +46,15 @@ export const useUserStore = defineStore("userstore", {
     logout() {
       this.username = null;
       this.token = null;
+      this.email = null;
+      this.role = null;
       delete axios.defaults.headers.common['Authorization'];
+
+      // Clear local storage
+      localStorage.removeItem("username");
+      localStorage.removeItem("token");
+      localStorage.removeItem("email");
+      localStorage.removeItem("role");
     },
 
     setUsername(username) {
