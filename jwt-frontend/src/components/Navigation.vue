@@ -7,7 +7,7 @@
             >Home</router-link
           >
         </li>      
-        <li class="nav-item">
+        <li class="nav-item" v-if="userstore.isLoggedIn">
           <router-link to="/products" class="nav-link" active-class="active"
             >Products</router-link
           >
@@ -17,14 +17,26 @@
             >Login</router-link
           >
         </li>
+        <li class="nav-item" v-if='userstore.isAdmin && userstore.isLoggedIn'>
+          <router-link to="/admin" class="nav-link" active-class="active"
+            >Admin</router-link
+          >
+        </li>
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
-export default {
+import { useUserStore } from '../stores/userstore';
+
+export default {  
   name: "Navigation",
+  setup() {
+    const userstore = useUserStore();
+
+    return { userstore };
+  },
 };
 </script>
 

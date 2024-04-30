@@ -18,6 +18,10 @@ class UserRepository extends Repository
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
             $user = $stmt->fetch();
 
+            if (!$user)
+                return false;
+
+            
             $result = $this->verifyPassword($password, $user->password);
 
             if (!$result)
@@ -34,10 +38,11 @@ class UserRepository extends Repository
 
     function insert($user){
         try {
+            $password = $this->hashPassword($user->password);
             $stmt = $this->connection->prepare("INSERT INTO users (user_role, username, password, email) VALUES (:user_role, :username, :password, :email)");
             $stmt->bindParam(':user_role', $user->user_role);
             $stmt->bindParam(':username', $user->username);
-            $stmt->bindParam(':password', $this->hashPassword($user->password));
+            $stmt->bindParam(':password', $password);
             $stmt->bindParam(':email', $user->email);
             $stmt->execute();
 
