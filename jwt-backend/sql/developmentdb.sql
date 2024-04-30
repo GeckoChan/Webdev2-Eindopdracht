@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysql
--- Gegenereerd op: 25 jan 2022 om 13:39
--- Serverversie: 10.6.4-MariaDB-1:10.6.4+maria~focal
--- PHP-versie: 7.4.25
+-- Gegenereerd op: 30 apr 2024 om 09:06
+-- Serverversie: 11.3.2-MariaDB-1:11.3.2+maria~ubu2204
+-- PHP-versie: 8.2.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,117 +24,130 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `user`
+-- Tabelstructuur voor tabel `achievements`
 --
 
-CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+CREATE TABLE `achievements` (
+  `achievement_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `image_path` varchar(255) NOT NULL,
+  `progress_current` int(11) NOT NULL,
+  `progress_limit` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `users`
+--
+
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
+  `user_role_id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-
-INSERT INTO `user` (`id`, `username`, `password`, `email`) VALUES
-(1, 'username', '$2y$10$DQlV0u9mFmtOWsOdxXX9H.4kgzEB3E8o97s.S.Pdy4klUAdBvtVh.', 'username@password.com');
-
-
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
-
-ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-COMMIT;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `category`
+-- Tabelstructuur voor tabel `users_achievements`
 --
 
-
-
-CREATE TABLE `category` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Gegevens worden geëxporteerd voor tabel `category`
---
-
-INSERT INTO `category` (`id`, `name`) VALUES
-(1, 'bread'),
-(3, 'vegetables');
+CREATE TABLE `users_achievements` (
+  `users_achievements_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `achievement_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Tabelstructuur voor tabel `product`
+-- Tabelstructuur voor tabel `user_roles`
 --
 
-CREATE TABLE `product` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `price` decimal(10,2) NOT NULL,
-  `description` varchar(8000) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `category_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Gegevens worden geëxporteerd voor tabel `product`
---
-
-INSERT INTO `product` (`id`, `name`, `price`, `description`, `image`, `category_id`) VALUES
-(1, 'Ciabatta', '2.50', 'Ciabatta (which translates to slipper!) is an Italian bread made with wheat flour, salt, yeast, and water. Though it\'s texture and crust vary slightly throughout Italy, the essential ingredients remain the same. Ciabatta is best for sandwiches and paninis, naturally.', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/957759184-1529703875.jpg?crop=1.00xw:0.645xh;0,0.104xh&resize=980:*', 1),
-(2, 'Whole Wheat Bread', '2.00', 'Unlike white bread, whole-wheat bread is made from flour that uses almost the entire wheat grain—with the bran and germ in tact. This means more nutrients and fiber per slice! ', 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/whole-wheat-bread-horizontal-1-jpg-1590195849.jpg?crop=0.735xw:0.735xh;0.187xw,0.128xh&resize=980:*', 1),
-(3, 'Artichoke', '1.50', 'Artichokes contain an unusual organic acid called cynarin which affects taste and may be the reason why water appears to taste sweet after eating artichokes. The flavour of wine is similarly altered and many wine experts believe that wine shouldn’t accompany artichokes.', 'https://www.vegetables.co.nz/assets/vegetables/_resampled/FillWyI0MDAiLCIzMDAiXQ/artichokes-globe.png', 3),
-(4, 'Asparagus ', '3.00', 'Asparagus originated in the Eastern Mediterranean and was a favourite of the Greeks and Romans who used it as a medicine. Varieties of asparagus grow wild in parts of Europe, Turkey, Africa, Middle East and Asia.', 'https://www.vegetables.co.nz/assets/vegetables/_resampled/FillWyI0MDAiLCIzMDAiXQ/asparagus.png', 3);
+CREATE TABLE `user_roles` (
+  `user_role_id` int(11) NOT NULL,
+  `role` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexen voor tabel `category`
+-- Indexen voor tabel `achievements`
 --
-ALTER TABLE `category`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `achievements`
+  ADD PRIMARY KEY (`achievement_id`);
 
 --
--- Indexen voor tabel `product`
+-- Indexen voor tabel `users`
 --
-ALTER TABLE `product`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `product_category` (`category_id`);
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `user_role_id_FK` (`user_role_id`);
+
+--
+-- Indexen voor tabel `users_achievements`
+--
+ALTER TABLE `users_achievements`
+  ADD PRIMARY KEY (`users_achievements_id`),
+  ADD KEY `user_id_FK` (`user_id`),
+  ADD KEY `achievement_id_FK` (`achievement_id`);
+
+--
+-- Indexen voor tabel `user_roles`
+--
+ALTER TABLE `user_roles`
+  ADD PRIMARY KEY (`user_role_id`);
 
 --
 -- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT voor een tabel `category`
+-- AUTO_INCREMENT voor een tabel `achievements`
 --
-ALTER TABLE `category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `achievements`
+  MODIFY `achievement_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT voor een tabel `product`
+-- AUTO_INCREMENT voor een tabel `users`
 --
-ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT voor een tabel `users_achievements`
+--
+ALTER TABLE `users_achievements`
+  MODIFY `users_achievements_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT voor een tabel `user_roles`
+--
+ALTER TABLE `user_roles`
+  MODIFY `user_role_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Beperkingen voor tabel `product`
+-- Beperkingen voor tabel `users`
 --
-ALTER TABLE `product`
-  ADD CONSTRAINT `product_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`);
+ALTER TABLE `users`
+  ADD CONSTRAINT `user_role_id_FK` FOREIGN KEY (`user_role_id`) REFERENCES `user_roles` (`user_role_id`);
+
+--
+-- Beperkingen voor tabel `users_achievements`
+--
+ALTER TABLE `users_achievements`
+  ADD CONSTRAINT `achievement_id_FK` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`achievement_id`),
+  ADD CONSTRAINT `user_id_FK` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
