@@ -3,16 +3,16 @@
 namespace Controllers;
 
 use Exception;
-use Services\ProductService;
+use Services\AchievementService;
 
-class ProductController extends Controller
+class AchievementController extends Controller
 {
     private $service;
 
     // initialize services
     function __construct()
     {
-        $this->service = new ProductService();
+        $this->service = new AchievementService();
     }
 
     public function getAll()
@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function create()
     {
         try {
-            $product = $this->createObjectFromPostedJson("Models\\Product");
+            $product = $this->createObjectFromPostedJson("Models\\Achievement");
             $product = $this->service->insert($product);
 
         } catch (Exception $e) {
@@ -58,18 +58,18 @@ class ProductController extends Controller
         $this->respond($product);
     }
 
-    public function update($id)
-    {
-        try {
-            $product = $this->createObjectFromPostedJson("Models\\Product");
-            $product = $this->service->update($product, $id);
+    // public function update($id)
+    // {
+    //     try {
+    //         $product = $this->createObjectFromPostedJson("Models\\Product");
+    //         $product = $this->service->update($product, $id);
 
-        } catch (Exception $e) {
-            $this->respondWithError(500, $e->getMessage());
-        }
+    //     } catch (Exception $e) {
+    //         $this->respondWithError(500, $e->getMessage());
+    //     }
 
-        $this->respond($product);
-    }
+    //     $this->respond($product);
+    // }
 
     public function delete($id)
     {

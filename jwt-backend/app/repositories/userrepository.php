@@ -11,21 +11,19 @@ class UserRepository extends Repository
     function checkUsernamePassword($username, $password)
     {
         try {
-            // retrieve the user with the given username
-            $stmt = $this->connection->prepare("SELECT id, username, password, email FROM user WHERE username = :username");
+            $stmt = $this->connection->prepare("SELECT user_id, user_role, username, password, email FROM users WHERE username = :username");
             $stmt->bindParam(':username', $username);
             $stmt->execute();
 
             $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\User');
             $user = $stmt->fetch();
 
-            // verify if the password matches the hash in the database
             $result = $this->verifyPassword($password, $user->password);
 
             if (!$result)
                 return false;
 
-            // do not pass the password hash to the caller
+
             $user->password = "";
 
             return $user;
@@ -34,13 +32,37 @@ class UserRepository extends Repository
         }
     }
 
-    // hash the password (currently uses bcrypt)
+    function insert($user){
+        try {
+            $stmt = $this->connection->prepare("INSERT INTO users (user_role, username, password, email) VALUES (:user_role, :username, :password, :email)");
+            $stmt->bindParam(':user_role', $user->user_role);
+            $stmt->bindParam(':username', $user->username);
+            $stmt->bindParam(':password', $this->hashPassword($user->password));
+            $stmt->bindParam(':email', $user->email);
+            $stmt->execute();
+
+            return $this->connection->lastInsertId();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    
+    }
+
+    function delete($user){
+        try {
+            $stmt = $this->connection->prepare("DELETE FROM users WHERE user_id = :user_id");
+            $stmt->bindParam(':user_id', $user->user_id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 
-    // verify the password hash
     function verifyPassword($input, $hash)
     {
         return password_verify($input, $hash);

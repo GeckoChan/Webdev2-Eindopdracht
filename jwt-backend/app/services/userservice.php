@@ -3,8 +3,8 @@ namespace Services;
 
 use Repositories\UserRepository;
 
-class UserService {
-
+class UserService
+{
     private $repository;
 
     function __construct()
@@ -12,9 +12,18 @@ class UserService {
         $this->repository = new UserRepository();
     }
 
-    public function checkUsernamePassword($username, $password) {
+    public function checkUsernamePassword($username, $password)
+    {
         return $this->repository->checkUsernamePassword($username, $password);
     }
-}
 
-?>
+    public function insert($user)
+    {
+        return $this->repository->insert($user);
+    }
+
+    public function delete($user)
+    {
+        return $this->repository->delete($user);
+    }
+}

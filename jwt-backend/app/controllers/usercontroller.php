@@ -26,4 +26,24 @@ class UserController extends Controller
 
         // return jwt
     }
+
+    public function register() {
+
+        // read user data from request body
+
+        // insert user into db
+
+        // generate jwt
+
+        // return jwt
+    }
+
+    public function delete() {
+
+        // read user data from request body
+
+        // delete user from db
+
+        // return success message
+    }
 }
