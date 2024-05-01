@@ -6,21 +6,28 @@
           <router-link to="/" class="nav-link" active-class="active"
             >Home</router-link
           >
-        </li>      
+        </li>
         <li class="nav-item" v-if="userstore.isLoggedIn">
           <router-link to="/products" class="nav-link" active-class="active"
             >Products</router-link
           >
         </li>
-        <li class="nav-item">
-          <router-link to="/login" class="nav-link" active-class="active"
-            >Login</router-link
+        <li class="nav-item" v-if="userstore.isAdmin && userstore.isLoggedIn">
+          <router-link to="/teacher" class="nav-link" active-class="active"
+            >Teacher</router-link
           >
         </li>
-        <li class="nav-item" v-if='userstore.isAdmin && userstore.isLoggedIn'>
-          <router-link to="/admin" class="nav-link" active-class="active"
-            >Admin</router-link
-          >
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" v-if="!userstore.isLoggedIn">
+          <router-link to="/login" class="nav-link" active-class="active">
+            Login
+          </router-link>
+        </li>
+        <li class="nav-item" v-if="userstore.isLoggedIn">
+          <router-link to="/myaccount" class="nav-link" active-class="active">
+            My account
+          </router-link>
         </li>
       </ul>
     </div>
@@ -28,9 +35,9 @@
 </template>
 
 <script>
-import { useUserStore } from '../stores/userstore';
+import { useUserStore } from "../stores/userstore";
 
-export default {  
+export default {
   name: "Navigation",
   setup() {
     const userstore = useUserStore();
@@ -40,5 +47,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

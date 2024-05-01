@@ -23,7 +23,6 @@
               />
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="button" class="btn btn-secondary" @click="logout">Logout</button>
           </form>
         </div>
       </div>
@@ -51,14 +50,11 @@ export default {
       this.userstore
         .login(this.username, this.password)
         .then(() => {
-          this.$router.replace("/");
+          this.$router.replace("/myaccount");
         })
         .catch((error) => {
           this.errorMessage = error;
         });
-    },
-    logout() {
-      this.userstore.logout();
     },
   },
 };
