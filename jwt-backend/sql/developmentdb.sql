@@ -32,7 +32,6 @@ CREATE TABLE `achievements` (
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `image_path` varchar(255) NOT NULL,
-  `progress_current` int(11) NOT NULL,
   `progress_limit` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

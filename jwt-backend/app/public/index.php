@@ -24,5 +24,8 @@ $router->delete('/achievements/(\d+)', 'AchievementController@delete');
 $router->post('/users/login', 'UserController@login');
 $router->post('/users/register', 'UserController@register');
 
+// routes for the userachievements endpoint
+$router->get('/userachievements', 'UserAchievementController@getAll');
+
 // Run it!
 $router->run();

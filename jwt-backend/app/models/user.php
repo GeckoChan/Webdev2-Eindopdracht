@@ -1,7 +1,7 @@
 <?php
 namespace Models;
 
-class user {
+class User {
 
     public int $user_id;
     public string $user_role;
