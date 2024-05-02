@@ -61,4 +61,14 @@ class UserController extends Controller
 
         // return success message
     }
+
+    public function getTopUsers() {
+        $limit = NULL;
+        if (isset($_GET["limit"]) && is_numeric($_GET["limit"])) {
+            $limit = $_GET["limit"];
+        }
+
+        $users = $this->service->getTopUsers($limit);
+        $this->respond($users);
+    }
 }

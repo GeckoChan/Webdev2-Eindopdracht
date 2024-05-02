@@ -11,9 +11,9 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-4">
-          <p class="lead">Top Achievers</p>
-          <div class="card" id="top_achievers" style="height: 40%;">
-            <!-- <top-achievers></top-achievers> -->
+          <p class="lead">Top 5 Achievers</p>
+          <div class="card" id="top_achievers" style="overflow-y: auto; max-height: 70%;">
+            <top-achievers></top-achievers>
           </div>
         </div>
       </div>
@@ -23,12 +23,12 @@
 
 <script>
 import AchievementList from "./achievements/AchievementList.vue";
-// import TopAchievers from './achievements/TopAchievers.vue';
+import TopAchievers from './account/TopAchievers.vue';
 export default {
   name: "Home",
   components: {
     AchievementList,
-    // TopAchievers,
+    TopAchievers,
   },
 };  
 </script>

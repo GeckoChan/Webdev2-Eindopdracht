@@ -2,7 +2,6 @@
     <div class="container mt-3 mb-1">
       <div class="row">
         <div class="col-md-12">
-          
           <div class="list-group">
             <achievement-list-item
               v-for="achievement in achievements"

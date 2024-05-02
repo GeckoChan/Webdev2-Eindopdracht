@@ -26,4 +26,9 @@ class UserService
     {
         return $this->repository->delete($user);
     }
+
+    public function getTopUsers($limit = null)
+    {
+        return $this->repository->getTopUsers($limit);
+    }
 }
