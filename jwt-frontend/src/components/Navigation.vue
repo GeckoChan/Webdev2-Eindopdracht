@@ -8,8 +8,8 @@
           >
         </li>
         <li class="nav-item" v-if="userstore.isLoggedIn">
-          <router-link to="/products" class="nav-link" active-class="active"
-            >Products</router-link
+          <router-link to="/myachievements" class="nav-link" active-class="active"
+            >My Achievements</router-link
           >
         </li>
         <li class="nav-item" v-if="userstore.isAdmin && userstore.isLoggedIn">

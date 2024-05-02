@@ -32,6 +32,7 @@ $router->post('/admin/users', 'AdminController@create');
 
 // routes for the userachievements endpoint
 $router->get('/userachievements', 'UserAchievementController@getAll');
+$router->get('/userachievements/account/(\d+)', 'UserAchievementController@getAllByUserId');
 
 
 // Run it!

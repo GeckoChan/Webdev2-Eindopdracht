@@ -25,6 +25,7 @@ class UserController extends Controller
         $tokenResponse = $this->generateJwt($user);
         
         $response = [
+            "user_id" => $user->user_id,
             "username" => $user->username,
             "email" => $user->email,
             "role" => $user->user_role,

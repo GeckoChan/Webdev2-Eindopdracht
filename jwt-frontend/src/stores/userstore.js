@@ -3,6 +3,7 @@ import axios from "../axios-auth";
 
 export const useUserStore = defineStore("userstore", {
   state: () => ({
+    user_id: localStorage.getItem("user_id") || null,
     username: localStorage.getItem("username") || null,
     token: localStorage.getItem("token") || null,
     email: localStorage.getItem("email") || null,
@@ -11,6 +12,7 @@ export const useUserStore = defineStore("userstore", {
   getters: {
     isLoggedIn: (state) => state.username !== null,
     isAdmin: (state) => state.role === "admin",
+    getUserId: (state) => state.user_id,
     getUser: (state) => state,
     getUsername: (state) => state.username,
     getEmail: (state) => state.email,
@@ -27,6 +29,7 @@ export const useUserStore = defineStore("userstore", {
           })
           .then((res) => {
             console.log(res.data);
+            this.user_id = res.data.user_id;
             this.username = res.data.username;
             this.token = res.data.jwt;
             this.email = res.data.email;
@@ -34,6 +37,7 @@ export const useUserStore = defineStore("userstore", {
             axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.token;
 
             // Save data to local storage
+            localStorage.setItem("user_id", this.user_id);
             localStorage.setItem("username", this.username);
             localStorage.setItem("token", this.token);
             localStorage.setItem("email", this.email);
@@ -45,6 +49,7 @@ export const useUserStore = defineStore("userstore", {
     },
 
     logout() {
+      this.user_id = null;
       this.username = null;
       this.token = null;
       this.email = null;
@@ -52,6 +57,7 @@ export const useUserStore = defineStore("userstore", {
       delete axios.defaults.headers.common['Authorization'];
 
       // Clear local storage
+      localStorage.removeItem("user_id");
       localStorage.removeItem("username");
       localStorage.removeItem("token");
       localStorage.removeItem("email");

@@ -15,11 +15,11 @@ class UserAchievementController extends Controller
 
     public function getAll()
     {
-        // $decoded = $this->checkForJwt();
+        $decoded = $this->checkForJwt();
 
-        // if (!$decoded) {
-        //     return;
-        // }
+        if (!$decoded) {
+            return;
+        }
 
         $offset = NULL;
         $limit = NULL;
@@ -32,6 +32,15 @@ class UserAchievementController extends Controller
         }
 
         $products = $this->service->getAll($offset, $limit);
+
+        $this->respond($products);
+    }
+
+    public function getAllByUserId($user_id){
+        $offset = NULL;
+        $limit = NULL;
+
+        $products = $this->service->getAllByUserId($user_id, $offset, $limit);
 
         $this->respond($products);
     }

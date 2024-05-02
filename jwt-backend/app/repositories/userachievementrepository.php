@@ -81,10 +81,14 @@ class UserAchievementRepository extends Repository
         }
     }
 
-    function getAllByUserId($userId)
+    function getAllByUserId($userId, $offset, $limit)
     {
         try {
-            $stmt = $this->connection->prepare("SELECT * FROM users_achievements WHERE user_id = :user_id");
+            $query = "SELECT user_id, achievement_id, progress FROM users_achievements WHERE user_id = :user_id";
+            if (isset($limit) && isset($offset)) {
+                $query .= " LIMIT :limit OFFSET :offset ";
+            }
+            $stmt = $this->connection->prepare($query);
             $stmt->bindParam(':user_id', $userId);
             $stmt->execute();
 

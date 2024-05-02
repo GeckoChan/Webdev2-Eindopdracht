@@ -23,9 +23,9 @@ class UserAchievementService
         return $this->repository->getOne($id);
     }
 
-    function getAllByUserId($userId)
+    function getAllByUserId($userId, $offset, $limit)
     {
-        return $this->repository->getAllByUserId($userId);
+        return $this->repository->getAllByUserId($userId, $offset, $limit);
     }
 
     function insert($userachievement)
