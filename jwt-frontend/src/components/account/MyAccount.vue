@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { useUserStore } from "../stores/userstore";
+import { useUserStore } from "../../stores/userstore";
 
 export default {
   name: "MyAccount",
@@ -35,8 +35,3 @@ export default {
 };
 </script>
 
-<style scoped>
-.account-info {
-  /* Add your styles here */
-}
-</style>

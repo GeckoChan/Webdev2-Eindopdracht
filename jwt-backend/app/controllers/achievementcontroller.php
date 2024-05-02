@@ -17,12 +17,6 @@ class AchievementController extends Controller
 
     public function getAll()
     {
-        $decoded = $this->checkForJwt();
-
-        if (!$decoded) {
-            return;
-        }
-
         $offset = NULL;
         $limit = NULL;
 

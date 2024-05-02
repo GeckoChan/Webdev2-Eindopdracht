@@ -15,12 +15,10 @@ h2 {
   box-shadow: 1px 1px 4px 0 rgb(30 30 30 / 16%);
 }
 
-.product-card img {
+.achievement-card img {
   margin: auto;
-  display: block;
-  max-width: 115px;
-  max-height: 100px;
-  margin-bottom: 10px;
+  max-width: 70px;
+  max-height: 70px;
 }
 
 @media screen and (max-width: 768px) {

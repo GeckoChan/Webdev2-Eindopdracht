@@ -21,8 +21,13 @@ $router->post('/achievements', 'AchievementController@create');
 $router->delete('/achievements/(\d+)', 'AchievementController@delete');
 
 // routes for the users endpoint
+$router->post('/users', 'UserController@register');
 $router->post('/users/login', 'UserController@login');
-$router->post('/users/register', 'UserController@register');
+
+// routes for admin endpoint // todo admin
+$router->delete('/admin/users', 'AdminController@delete'); 
+$router->get('/admin/users', 'AdminController@getAll');
+$router->post('/admin/users', 'AdminController@create');
 
 // routes for the userachievements endpoint
 $router->get('/userachievements', 'UserAchievementController@getAll');

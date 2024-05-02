@@ -1,16 +1,40 @@
 <template>
-  <section>
-    <div class="container">
-      <h2 class="mt-3 mt-lg-5">Welcome to the homepage</h2>
+  <section id="section-content">
+    <div class="container h-100">
+      <h1 class="display-4">Achieve in school</h1>
+      <div id="content-container" class="row h-100">
+        <div class="col-md-7">
+          <p class="lead">Showcase of Achievements</p>
+          <div class="card" id="achievement_list" style="overflow-y: auto; max-height: 70%;">
+            <achievement-list></achievement-list>
+          </div>
+        </div>
+        <div class="col-md-1"></div>
+        <div class="col-md-4">
+          <p class="lead">Top Achievers</p>
+          <div class="card" id="top_achievers" style="height: 40%;">
+            <!-- <top-achievers></top-achievers> -->
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script>
+import AchievementList from "./achievements/AchievementList.vue";
+// import TopAchievers from './achievements/TopAchievers.vue';
 export default {
   name: "Home",
-};
+  components: {
+    AchievementList,
+    // TopAchievers,
+  },
+};  
 </script>
 
 <style>
+#section-content {
+  height: 70vh;
+}
 </style>

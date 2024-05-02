@@ -58,6 +58,22 @@ export const useUserStore = defineStore("userstore", {
       localStorage.removeItem("role");
     },
 
+    register(username, email, password) {
+      return new Promise((resolve, reject) => {
+        axios
+          .post("users", {
+            username: username,
+            email: email,
+            password: password,
+          })
+          .then((res) => {
+            console.log(res.data);
+            resolve();
+          })
+          .catch((error) => reject(error));
+      });
+    },
+
     setUsername(username) {
       this.username = username;
     },

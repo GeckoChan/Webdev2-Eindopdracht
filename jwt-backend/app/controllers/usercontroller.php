@@ -37,15 +37,13 @@ class UserController extends Controller
 
     public function register() {
         $postedUser = $this->createObjectFromPostedJson("Models\\User");
-        $user = $this->service->insert($postedUser);
-
-        // read user data from request body
-
-        // insert user into db
-
-        // generate jwt
-
-        // return jwt
+        $postedUser->user_role = "user";
+        $user_id = $this->service->insert($postedUser);
+        if (!$user_id) {
+            $this->respondWithError(500, "User could not be created");
+            return;
+        }
+        $this->respond($user_id);
     }
 
     public function delete() {

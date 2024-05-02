@@ -1,8 +1,9 @@
 <template>
-  <section>
-    <div class="container">
+  <section class="d-flex drop-shadow-lg justify-content-center align-items-center vh-100">
+    <div class="container w-25 bg-dark text-white p-5 rounded shadow">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
+          <h1 class="text-center">Sign in</h1>
           <form @submit.prevent="login">
             <div class="mb-3">
               <label for="inputUsername" class="form-label">Username</label>
@@ -22,7 +23,10 @@
                 v-model="password"
               />
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Sign in</button>
+            <div>
+              <p>Don't have an account yet? <router-link to="/register">Sign up</router-link></p>
+            </div>
           </form>
         </div>
       </div>
@@ -31,7 +35,7 @@
 </template>
 
 <script>
-import { useUserStore } from "../stores/userstore";
+import { useUserStore } from "../../stores/userstore";
 
 export default {
   name: "Login",
