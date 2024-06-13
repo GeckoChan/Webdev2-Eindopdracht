@@ -37,6 +37,7 @@ export default {
   },
   methods: {
     getAchievements() {
+      axios.defaults.headers.common['Authorization'] = "Bearer " + this.userstore.getToken;
       axios
         .get("userachievements/account/" + this.userstore.getUserId)
         .then((res) => {

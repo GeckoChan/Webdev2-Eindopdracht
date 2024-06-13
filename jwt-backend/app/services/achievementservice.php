@@ -23,13 +23,18 @@ class AchievementService
         return $this->repository->getOne($id);
     }
 
+    function update($achievement)
+    {
+        return $this->repository->update($achievement);
+    }
+
     function insert($achievement)
     {
         return $this->repository->insert($achievement);
     }
 
-    function delete($achievement)
+    function delete($achievement_id)
     {
-        return $this->repository->delete($achievement);
+        return $this->repository->delete($achievement_id);
     }
 }

@@ -63,11 +63,26 @@ class Achievementrepository extends Repository
         }
     }
 
-    function delete($achievement)
+    function update($achievement)
+    {
+        try {
+            $stmt = $this->connection->prepare("UPDATE achievements SET title = :title, description = :description, image_path = :image_path, progress_limit = :progress_limit WHERE achievement_id = :achievement_id");
+            $stmt->bindParam(':title', $achievement->title);
+            $stmt->bindParam(':description', $achievement->description);
+            $stmt->bindParam(':image_path', $achievement->image_path);
+            $stmt->bindParam(':progress_limit', $achievement->progress_limit);
+            $stmt->bindParam(':achievement_id', $achievement->achievement_id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function delete($achievement_id)
     {
         try {
             $stmt = $this->connection->prepare("DELETE FROM achievements WHERE achievement_id = :achievement_id");
-            $stmt->bindParam(':achievement_id', $achievement->achievement_id);
+            $stmt->bindParam(':achievement_id', $achievement_id);
             $stmt->execute();
         } catch (PDOException $e) {
             echo $e;

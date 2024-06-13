@@ -9,7 +9,6 @@ class AchievementController extends Controller
 {
     private $service;
 
-    // initialize services
     function __construct()
     {
         $this->service = new AchievementService();
@@ -27,58 +26,63 @@ class AchievementController extends Controller
             $limit = $_GET["limit"];
         }
 
-        $products = $this->service->getAll($offset, $limit);
+        $achievements = $this->service->getAll($offset, $limit);
 
-        $this->respond($products);
+        $this->respond($achievements);
     }
 
     public function getOne($id)
     {
-        $product = $this->service->getOne($id);
+        $achievement = $this->service->getOne($id);
 
-        // we might need some kind of error checking that returns a 404 if the product is not found in the DB
-        if (!$product) {
-            $this->respondWithError(404, "Product not found");
+        if (!$achievement) {
+            $this->respondWithError(404, "achievement not found");
             return;
         }
-
-        $this->respond($product);
+        $this->respond($achievement);
     }
 
     public function create()
     {
         try {
-            $product = $this->createObjectFromPostedJson("Models\\Achievement");
-            $product = $this->service->insert($product);
+            if (!$this->authenticateAdmin()) {
+                return;
+            }
+            $achievement = $this->createObjectFromPostedJson("Models\\Achievement");
+            $achievement = $this->service->insert($achievement);
 
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());
         }
-
-        $this->respond($product);
+        $this->respond($achievement);
     }
 
-    // public function update($id)
-    // {
-    //     try {
-    //         $product = $this->createObjectFromPostedJson("Models\\Product");
-    //         $product = $this->service->update($product, $id);
+    public function update($id)
+    {
+        try {
+            if (!$this->authenticateAdmin()) {
+                return;
+            }
+            $achievement = $this->createObjectFromPostedJson("Models\\Achievement");
+            $achievement->achievement_id = $id;
+            $achievement = $this->service->update($achievement);
 
-    //     } catch (Exception $e) {
-    //         $this->respondWithError(500, $e->getMessage());
-    //     }
-
-    //     $this->respond($product);
-    // }
+        } catch (Exception $e) {
+            $this->respondWithError(500, $e->getMessage());
+        }
+        $this->respond("Achievement updated");
+    }
 
     public function delete($id)
     {
         try {
+            if (!$this->authenticateAdmin()) {
+                return;
+            }
             $this->service->delete($id);
         } catch (Exception $e) {
             $this->respondWithError(500, $e->getMessage());
         }
-
-        $this->respond(true);
+        $this->respond("Achievement deleted");
     }
 }

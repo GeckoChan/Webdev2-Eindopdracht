@@ -17,6 +17,11 @@ class UserService
         return $this->repository->checkUsernamePassword($username, $password);
     }
 
+    public function getTopUsers($limit = null)
+    {
+        return $this->repository->getTopUsers($limit);
+    }
+
     public function insert($user)
     {
         return $this->repository->insert($user);
@@ -27,8 +32,19 @@ class UserService
         return $this->repository->delete($user);
     }
 
-    public function getTopUsers($limit = null)
+    public function update($user)
     {
-        return $this->repository->getTopUsers($limit);
+        return $this->repository->update($user);
     }
+
+    public function getAll($offset = null, $limit = null)
+    {
+        return $this->repository->getAll($offset, $limit);
+    }
+
+    public function getOne($id)
+    {
+        return $this->repository->getOne($id);
+    }
+    
 }

@@ -15,9 +15,7 @@ class UserAchievementController extends Controller
 
     public function getAll()
     {
-        $decoded = $this->checkForJwt();
-
-        if (!$decoded) {
+        if (!$this->authenticateAdmin()) {
             return;
         }
 
@@ -37,11 +35,40 @@ class UserAchievementController extends Controller
     }
 
     public function getAllByUserId($user_id){
+        if (!$this->authenticateUser()) {
+            return;
+        }
+
         $offset = NULL;
         $limit = NULL;
 
         $products = $this->service->getAllByUserId($user_id, $offset, $limit);
 
         $this->respond($products);
+    }
+
+    public function create() {
+        if (!$this->authenticateAdmin()) {
+            return;
+        }
+
+        $postedUserAchievement = $this->createObjectFromPostedJson("Models\\UserAchievement");
+        $userAchievement = $this->service->insert($postedUserAchievement);
+        $this->respond($userAchievement);
+    }
+
+    public function delete($id) {
+        if (!$this->authenticateAdmin()) {
+            return;
+        }
+
+        $userAchievement = $this->service->getOne($id);
+        if (!$userAchievement) {
+            $this->respondWithError(404, "UserAchievement not found");
+            return;
+        }
+
+        $this->service->delete($userAchievement);
+        $this->respond("UserAchievement deleted");
     }
 }

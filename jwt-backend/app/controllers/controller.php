@@ -8,9 +8,10 @@ use \Firebase\JWT\Key;
 
 class Controller
 {
-    function checkForJwt() {
-         // Check for token header
-         if(!isset($_SERVER['HTTP_AUTHORIZATION'])) {
+    function checkForJwt()
+    {
+        // Check for token header
+        if (!isset($_SERVER['HTTP_AUTHORIZATION'])) {
             $this->respondWithError(401, "No token provided");
             return;
         }
@@ -37,12 +38,13 @@ class Controller
         }
     }
 
-    function generateJwt($user) {
+    function generateJwt($user)
+    {
         $secret_key = "YOUR_SECRET_KEY";
         $issuer = "http://localhost";
         $audience = "http://localhost";
         $issuedAt = time();
-        $notBefore = $issuedAt + 5;
+        $notBefore = $issuedAt;
         $expirationTime = $issuedAt + 1800; // token is valid for 30 minutes
 
 
@@ -62,6 +64,29 @@ class Controller
 
         $jwt = JWT::encode($payload, $secret_key, 'HS256');
         return $jwt;
+    }
+
+    function authenticateAdmin()
+    {
+        $decoded = $this->checkForJwt();
+
+        if (!$decoded) {
+            return;
+        } else if ($decoded->data->user_role != "admin") {
+            $this->respondWithError(401, "Unauthorized");
+            return;
+        }
+        return true;;
+    }
+
+    function authenticateUser()
+    {
+        $decoded = $this->checkForJwt();
+
+        if (!$decoded) {
+            return;
+        }
+        return $decoded;
     }
 
     function respond($data)
@@ -89,7 +114,7 @@ class Controller
 
         $object = new $className();
         foreach ($data as $key => $value) {
-            if(is_object($value)) {
+            if (is_object($value)) {
                 continue;
             }
             $object->{$key} = $value;

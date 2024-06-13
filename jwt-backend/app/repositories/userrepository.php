@@ -89,6 +89,53 @@ class UserRepository extends Repository
         }
     }
 
+    function update($user)
+    {
+        try {
+            $stmt = $this->connection->prepare("UPDATE users SET user_role = :user_role, username = :username, email = :email WHERE user_id = :user_id");
+            $stmt->bindParam(':user_role', $user->user_role);
+            $stmt->bindParam(':username', $user->username);
+            $stmt->bindParam(':email', $user->email);
+            $stmt->bindParam(':user_id', $user->user_id);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getAll($offset = null, $limit = null)
+    {
+        try {
+            $query = "SELECT user_id, user_role, username, email FROM users";
+            if (isset($limit) && isset($offset)) {
+                $query .= " LIMIT :limit OFFSET :offset ";
+            }
+            $stmt = $this->connection->prepare($query);
+            if (isset($limit) && isset($offset)) {
+                $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+                $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
+            }
+            $stmt->execute();
+
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
+    function getOne($id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT user_id, user_role, username, email FROM users WHERE user_id = :user_id");
+            $stmt->bindParam(':user_id', $id);
+            $stmt->execute();
+
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
     function hashPassword($password)
     {
         return password_hash($password, PASSWORD_DEFAULT);

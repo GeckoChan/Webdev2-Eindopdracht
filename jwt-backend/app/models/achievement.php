@@ -1,7 +1,8 @@
 <?php
 namespace Models;
 
-class Achievement {
+class Achievement
+{
 
     public int $achievement_id;
     public string $title;

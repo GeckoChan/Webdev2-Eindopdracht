@@ -34,7 +34,8 @@ export const useUserStore = defineStore("userstore", {
             this.token = res.data.jwt;
             this.email = res.data.email;
             this.role = res.data.role;
-            axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.token;
+            this.token = res.data.jwt;
+            axios.defaults.headers.common['Authorization'] = "Bearer " + res.data.jwt;
 
             // Save data to local storage
             localStorage.setItem("user_id", this.user_id);
