@@ -1,7 +1,8 @@
 <template>
-  <div class="sidebar">
-    <h3>achievements</h3>
-    <router-link to="/admin/achievements">View all achievements</router-link>
+  <div class="sidenav">
+    <h3>Dashboards</h3>
+    <router-link to="/teacher/achievements">Achievement</router-link>
+    <router-link to="/teacher/users">Users</router-link>
   </div>
 </template>
 <script></script>
@@ -11,12 +12,12 @@
   height: 100%;
   width: 200px;
   position: fixed;
-  z-index: 1;
   top: 55px;
   left: 0;
-  background-color: #64bba8;
+  background-color: #3f474f;
   overflow-x: hidden;
   padding-top: 20px;
+  z-index: 1;;
 }
 
 .sidenav a {

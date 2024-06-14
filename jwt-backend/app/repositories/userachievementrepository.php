@@ -158,5 +158,22 @@ class UserAchievementRepository extends Repository
         }
     }
 
+    function getOneByUserIdAndAchievementId($user_id, $achievement_id)
+    {
+        try {
+            $stmt = $this->connection->prepare("SELECT * FROM users_achievements WHERE user_id = :user_id AND achievement_id = :achievement_id");
+            $stmt->bindParam(':user_id', $user_id);
+            $stmt->bindParam(':achievement_id', $achievement_id);
+            $stmt->execute();
+
+            $stmt->setFetchMode(PDO::FETCH_CLASS, 'Models\UserAchievement');
+            $userAchievement = $stmt->fetch();
+
+            return $userAchievement;
+        } catch (PDOException $e) {
+            echo $e;
+        }
+    }
+
 
 }

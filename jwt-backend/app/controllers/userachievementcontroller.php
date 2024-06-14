@@ -71,4 +71,24 @@ class UserAchievementController extends Controller
         $this->service->delete($userAchievement);
         $this->respond("UserAchievement deleted");
     }
+
+    public function unassign() {
+        if (!$this->authenticateAdmin()) {
+            return;
+        }
+
+        $postedUserAchievement = $this->createObjectFromPostedJson("Models\\UserAchievement");
+        if (!$postedUserAchievement->user_id || !$postedUserAchievement->achievement_id) {
+            $this->respondWithError(400, "Missing user_id or achievement_id");
+            return;
+        }
+        $userAchievement = $this->service->getOneByUserIdAndAchievementId($postedUserAchievement->user_id, $postedUserAchievement->achievement_id);
+        if (!$userAchievement) {
+            $this->respondWithError(404, "UserAchievement not found");
+            return;
+        }
+
+        $this->service->delete($userAchievement);
+        $this->respond("UserAchievement unassigned");
+    }
 }

@@ -37,4 +37,15 @@ class AchievementService
     {
         return $this->repository->delete($achievement_id);
     }
+
+    function getAllOwnedAchievements($user_id, $offset, $limit)
+    {
+        return $this->repository->getAllOwnedAchievements($user_id, $offset, $limit);
+    }
+    
+
+    function getAllUnownedAchievements($user_id, $offset, $limit)
+    {
+        return $this->repository->getAllUnownedAchievements($user_id, $offset, $limit);
+    }
 }

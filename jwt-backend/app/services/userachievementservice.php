@@ -37,4 +37,9 @@ class UserAchievementService
     {
         return $this->repository->delete($userachievement);
     }
+
+    function getOneByUserIdAndAchievementId($userId, $achievementId)
+    {
+        return $this->repository->getOneByUserIdAndAchievementId($userId, $achievementId);
+    }
 }

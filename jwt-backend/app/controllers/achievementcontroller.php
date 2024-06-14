@@ -85,4 +85,44 @@ class AchievementController extends Controller
         }
         $this->respond("Achievement deleted");
     }
+
+    public function getAllOwnedAchievements($user_id)
+    {
+        if (!$this->authenticateAdmin()) {
+            return;
+        }
+
+        $offset = NULL;
+        $limit = NULL;
+
+        if (isset($_GET["offset"]) && is_numeric($_GET["offset"])) {
+            $offset = $_GET["offset"];
+        }
+        if (isset($_GET["limit"]) && is_numeric($_GET["limit"])) {
+            $limit = $_GET["limit"];
+        }
+
+        $achievements = $this->service->getAllOwnedAchievements($user_id, $offset, $limit);
+        $this->respond($achievements);
+    }
+
+    public function getAllUnownedAchievements($user_id)
+    {
+        if (!$this->authenticateAdmin()) {
+            return;
+        }
+
+        $offset = NULL;
+        $limit = NULL;
+
+        if (isset($_GET["offset"]) && is_numeric($_GET["offset"])) {
+            $offset = $_GET["offset"];
+        }
+        if (isset($_GET["limit"]) && is_numeric($_GET["limit"])) {
+            $limit = $_GET["limit"];
+        }
+
+        $achievements = $this->service->getAllUnownedAchievements($user_id, $offset, $limit);
+        $this->respond($achievements);
+    }
 }

@@ -118,9 +118,9 @@ class UserController extends Controller
             $limit = $_GET["limit"];
         }
 
-        $achievements = $this->service->getAll($offset, $limit);
+        $users = $this->service->getAll($offset, $limit);
 
-        $this->respond($achievements);
+        $this->respond($users);
     }
 
 }
